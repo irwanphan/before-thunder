@@ -1,6 +1,6 @@
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, Box } from '@mantine/core';
 import { theme } from '../theme';
 
 export const metadata = {
@@ -20,7 +20,11 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <Box p="lg">
+            {children}
+          </Box>
+        </MantineProvider>
       </body>
     </html>
   );

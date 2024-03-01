@@ -20,8 +20,10 @@
   },
   "dependencies": {
     "@mantine/core": "7.6.1",
+    "@mantine/dates": "^7.6.1",
     "@mantine/hooks": "7.6.1",
     "@next/bundle-analyzer": "^14.0.1",
+    "@prisma/client": "^5.5.2",
     "@tabler/icons-react": "^2.40.0",
     "next": "14.0.1",
     "react": "18.2.0",
@@ -61,6 +63,7 @@
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.0.3",
+    "prisma": "^5.5.2",
     "storybook": "^7.5.2",
     "storybook-dark-mode": "^3.0.1",
     "stylelint": "^15.11.0",
