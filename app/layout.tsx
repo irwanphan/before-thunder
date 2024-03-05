@@ -2,6 +2,7 @@ import '@mantine/core/styles.css';
 import React from 'react';
 import { MantineProvider, ColorSchemeScript, Box } from '@mantine/core';
 import { theme } from '../theme';
+import Navbar from '@components/Navbar';
 
 export const metadata = {
   title: 'Mantine Next.js template',
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <MantineProvider theme={theme}>
+          <Navbar />
           <Box p="lg">
             {children}
           </Box>
