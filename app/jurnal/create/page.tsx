@@ -1,23 +1,51 @@
-
 'use client'
-import { useState } from "react"
+
+import { useFormState, useFormStatus } from "react-dom"
 import { Box, Button, MultiSelect, NumberInput, Select, Text, TextInput } from "@mantine/core"
 import { DatePickerInput } from "@mantine/dates"
+import createJournal from "./_actions/create-journal"
 import classes from "./create.module.css"
 
+const SubmitButton = () => {
+    const { pending } = useFormStatus();
+    return (
+        <Button
+            mt="md"
+            size="lg"
+            className={classes.control}
+            variant="gradient"
+            gradient={{ from: 'blue', to: 'navy' }}
+            type="submit"
+            disabled={pending}
+        >
+            Simpan Jurnal
+        </Button>
+    )
+}
+
 const JurnalPage = () => {
-    const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+    const [formState, formAction] = useFormState(createJournal, {
+        success: false,
+        message: "",
+        journal: undefined,
+    })
+
     return (
         <Box>
             <Text>Jurnal Perkuliahan</Text>
 
+            {
+                formState?.success === true ? "success store" : ""
+            }
 
+            <form action={formAction}>
             <Select
                 mt="md"
                 comboboxProps={{ withinPortal: true }}
                 data={['Bisnis Digital', 'Sistem & Teknologi Informasi', 'Kewirausahaan']}
                 placeholder="Pilih Program Studi"
                 label="Program Studi"
+                name="prodi"
                 classNames={classes}
             />
             <Select
@@ -26,6 +54,7 @@ const JurnalPage = () => {
                 data={['2023/2024']}
                 placeholder="Pilih Tahun Akademik"
                 label="Tahun Akademik"
+                name="tahunAkademik"
                 classNames={classes}
             />
             <Select
@@ -34,24 +63,28 @@ const JurnalPage = () => {
                 data={['ganjil', 'genap']}
                 placeholder="Pilih Semester"
                 label="Semester"
+                name="semester"
                 classNames={classes}
             />
             <TextInput 
                 mt="md"
                 label="Kelas" 
                 placeholder="Tulis Nama Kelas" 
+                name="kelas"
                 classNames={classes} 
             />
             <TextInput 
                 mt="md"
                 label="Mata Kuliah" 
                 placeholder="Tulis Nama Mata Kuliah" 
+                name="mataKuliah"
                 classNames={classes} 
             />
             <NumberInput 
                 mt="md"
                 label="Jumlah Pertemuan" 
                 placeholder="Masukkan Jumlah Pertemuan" 
+                name="jumlahPertemuan"
                 classNames={classes} 
             />
             <MultiSelect
@@ -59,6 +92,7 @@ const JurnalPage = () => {
                 label="Setiap Hari"
                 placeholder="Pilih Hari"
                 data={['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']}
+                name="setiapHari"
                 clearable
                 classNames={classes} 
             />
@@ -68,20 +102,12 @@ const JurnalPage = () => {
                 type="range"
                 label="Pick dates range"
                 placeholder="Pick dates range"
-                value={value}
-                onChange={setValue}
+                name="periode"
                 classNames={classes} 
             />
 
-            <Button
-                mt="md"
-                size="lg"
-                className={classes.control}
-                variant="gradient"
-                gradient={{ from: 'blue', to: 'navy' }}
-            >
-                Simpan
-          </Button>
+            <SubmitButton />
+            </form>
         </Box>
     )
 }
