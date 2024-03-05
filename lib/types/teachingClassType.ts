@@ -1,4 +1,4 @@
-export type JournalType = {
+export type TeachingClassType = {
     authorId: number | undefined,
     prodi: string,
     tahunAkademik: string,
@@ -10,7 +10,4 @@ export type JournalType = {
     periode: string,
     periodeMulai: Date | undefined,
     periodeSelesai: Date | undefined,
-    kelasPengganti: Boolean,
-    materiAjar: string,
-    catatan: string 
 }

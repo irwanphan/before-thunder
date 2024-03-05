@@ -3,7 +3,7 @@
 import { useFormState, useFormStatus } from "react-dom"
 import { Box, Button, MultiSelect, NumberInput, Select, Text, TextInput } from "@mantine/core"
 import { DatePickerInput } from "@mantine/dates"
-import createJournal from "./_actions/create-journal"
+import createTeachingClass from "./_actions/create-teaching-class"
 import classes from "./create.module.css"
 
 const SubmitButton = () => {
@@ -18,21 +18,21 @@ const SubmitButton = () => {
             type="submit"
             disabled={pending}
         >
-            Simpan Jurnal
+            Simpan
         </Button>
     )
 }
 
-const JurnalPage = () => {
-    const [formState, formAction] = useFormState(createJournal, {
+const CreateTeachingClassPage = () => {
+    const [formState, formAction] = useFormState(createTeachingClass, {
         success: false,
         message: "",
-        journal: undefined,
+        teachingClass: undefined,
     })
 
     return (
         <Box>
-            <Text>Jurnal Perkuliahan</Text>
+            <Text>Kelas Ajar</Text>
 
             {
                 formState?.success === true ? "success store" : ""
@@ -112,4 +112,4 @@ const JurnalPage = () => {
     )
 }
 
-export default JurnalPage
+export default CreateTeachingClassPage

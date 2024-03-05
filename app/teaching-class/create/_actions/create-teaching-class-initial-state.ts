@@ -1,6 +1,6 @@
-import { JournalType } from "@lib/types/journalType";
+import { TeachingClassType } from "@lib/types/teachingClassType";
 
-export const initialState : JournalType = {
+export const initialState : TeachingClassType = {
   authorId: undefined,
   prodi: '',
   tahunAkademik: '',
@@ -11,8 +11,5 @@ export const initialState : JournalType = {
   setiapHari: [],
   periode: '',
   periodeMulai: undefined,
-  periodeSelesai: undefined,
-  kelasPengganti: false,
-  materiAjar: '',
-  catatan: ''
+  periodeSelesai: undefined
 }

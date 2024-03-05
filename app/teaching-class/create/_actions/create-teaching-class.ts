@@ -1,17 +1,16 @@
 "use server";
 
 import prisma from "@/components/prisma";
-import { JournalType } from "@lib/types/journalType";
+import { TeachingClassType } from "@lib/types/teachingClassType";
 import { z } from "zod";
-// import { initialState } from "./create-journal-initial-state";
 
-type CreateJournalResponse = {
+type CreateTeachingClassResponse = {
   success: boolean,
   message: string,
-  journal?: JournalType
+  journal?: TeachingClassType
 }
 
-export default async function createJournal(
+export default async function createTeachingClass(
   prevState: any,
   formData: FormData,
 ) {
@@ -27,9 +26,6 @@ export default async function createJournal(
     periode: z.string(),
     // periodeMulai: z.string(),
     // periodeSelesai: z.string(),
-    // kelasPengganti: z.string(),
-    // materiAjar: z.string(),
-    // catatan: z.string()
   });
   console.log(formData)
   const parsed = schema.safeParse({
@@ -47,7 +43,7 @@ export default async function createJournal(
     console.log(parsed.error.issues)
     return {
       success: false, 
-      message: "Failed to create journal",
+      message: "Failed to create teaching class",
       // parsed
     };
   }
@@ -56,7 +52,7 @@ export default async function createJournal(
   try {
 
 
-    const journal = await prisma.journal.create({
+    const teachingClass = await prisma.teachingClass.create({
       data: {
         authorId: 1,
         prodi: data.prodi,
@@ -69,19 +65,16 @@ export default async function createJournal(
         periode: 'asdf',
         periodeMulai: new Date('2012-10-10'),
         periodeSelesai: new Date('2012-10-10'),
-        kelasPengganti: false,
-        materiAjar: 'asdf',
-        catatan: 'asdf'
       },
     });
 
-    console.log(journal)
-    // return journal
+    console.log(teachingClass)
+    // return teachingClass
 
     return {
       success: true,
-      message: "Journal created successfully",
-      journal: journal
+      message: "Teaching Class created successfully",
+      teachingClass: teachingClass
     }
   } catch (err) {
     if (err instanceof z.ZodError) {
