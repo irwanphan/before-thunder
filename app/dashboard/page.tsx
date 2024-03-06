@@ -12,7 +12,7 @@ import {
     IconCashBanknote,
     IconCoin,
 } from '@tabler/icons-react';
-import classes from './dashboard.module.css';
+import classes from './Dashboard.module.css';
   
 const mockdata = [
     { title: 'Credit cards', icon: IconCreditCard, color: 'violet' },
