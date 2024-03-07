@@ -1,11 +1,20 @@
+import prisma from '@components/prisma';
+import TeachingClassTable from './_components/TeachingClassTable';
 
+const TeachingClassPage = async () => {
+  const teachingClasses = await getTeachingClasses();
+  // { user: session?.user }
+  // console.log(teachingClasses);
 
-const TeachingClassPage = () => {
   return (
     <div>
-      <h1>Teaching Class</h1>
+      <TeachingClassTable teachingClasses={teachingClasses} />
     </div>
-  );
+  )
+}
+
+async function getTeachingClasses() {
+  return await prisma.teachingClass.findMany();
 }
 
 export default TeachingClassPage;

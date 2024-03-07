@@ -5,8 +5,8 @@ import { theme } from '../theme';
 import Navbar from '@components/Navbar';
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'BT',
+  description: 'Teaching Journal App',
 };
 
 export default function RootLayout({ children }: { children: any }) {

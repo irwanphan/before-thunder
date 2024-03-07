@@ -27,7 +27,9 @@ export function Navbar() {
     const items = links.map((link) => {
         const menuItems = link.links?.map((item) => (
             <Menu.Item key={item.label}>
-                <Link href={item.link} passHref className={classes.link}>
+                <Link href={item.link} passHref 
+                    className={classes.link}
+                >
                     {item.label}
                 </Link>
             </Menu.Item>

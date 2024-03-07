@@ -35,7 +35,7 @@ export default async function createTeachingClass(
     kelas: formData.get('kelas'),
     mataKuliah: formData.get('mataKuliah'),
     jumlahPertemuan: Number(formData.get('jumlahPertemuan')),
-    setiapHari: formData.get('setiapHari')?.toString().split(","),
+    setiapHari: formData.get('setiapHari')?.toString().split(", "),
     periode: formData.get('periode'),
   });
 
@@ -61,7 +61,7 @@ export default async function createTeachingClass(
         kelas: data.kelas,
         mataKuliah: data.mataKuliah,
         jumlahPertemuan: data.jumlahPertemuan,
-        setiapHari: data.setiapHari.join(","),
+        setiapHari: data.setiapHari.join(", "),
         periode: 'asdf',
         periodeMulai: new Date('2012-10-10'),
         periodeSelesai: new Date('2012-10-10'),
