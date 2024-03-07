@@ -1,10 +1,10 @@
 'use client'
 
-import { Box, Button, Checkbox, Text, TextInput } from "@mantine/core"
+import { Box, Button, Checkbox, Input, Text, TextInput } from "@mantine/core"
 import classes from "./create.module.css"
 import { useFormState, useFormStatus } from "react-dom"
 import createSessionLog from "./_actions/create-session-log"
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 
 const SubmitButton = () => {
     const { pending } = useFormStatus();
@@ -27,13 +27,13 @@ const CreateSessionLogPage = () => {
     const [formState, formAction] = useFormState(createSessionLog, {
         success: false,
         message: "",
-        sessionLog: undefined,
+        // sessionLog: undefined,
     })
 
     const params = useParams();
     const { teachingClassId } = params
 
-    formAction.teachingClassId = teachingClassId
+    if (teachingClassId == null) return notFound();
 
     return (
         <Box>
@@ -41,6 +41,8 @@ const CreateSessionLogPage = () => {
 
             <form action={formAction}>
             
+            <Input type="hidden" name="teachingClassId" value={teachingClassId} />
+
             <Box mt="md"
                 className={classes.box}
             >

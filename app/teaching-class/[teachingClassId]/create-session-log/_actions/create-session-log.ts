@@ -13,15 +13,16 @@ type CreateTeachingClassResponse = {
 export default async function createSessionLog(
   prevState: any,
   formData: FormData,
-  teachingClassId: number
 ) {
   const schema = z.object({
+    teachingClassId: z.number(),
     kelasPengganti: z.boolean(),
     materiAjar: z.string(),
     catatan: z.string(),
   });
   // console.log(formData)
   const parsed = schema.safeParse({
+    teachingClassId: Number(formData.get("teachingClassId")),
     kelasPengganti: formData.get("kelasPengganti") === "on" ? true : false,
     materiAjar: formData.get("materiAjar"),
     catatan: formData.get("catatan"),
@@ -37,34 +38,36 @@ export default async function createSessionLog(
   }
   const data = parsed.data;
   console.log('parsed data: ', data)
-  console.log('teachingClassId: ', teachingClassId)
 
-  // try {
+  try {
+    const sessionLog = await prisma.sessionLog.create({
+      data: {
+        teachingClass: {
+          connect: {
+            id: data.teachingClassId
+          }
+        },
+        kelasPengganti: data.kelasPengganti,
+        materiAjar: data.materiAjar,
+        catatan: data.catatan,
+      },
+    });
 
+    console.log(sessionLog)
+    // return sessionLog
 
-  //   const sessionLog = await prisma.sessionLog.create({
-  //     data: {
-  //       kelasPengganti: data.kelasPengganti,
-  //       materiAjar: data.materiAjar,
-  //       catatan: data.catatan,
-  //     },
-  //   });
+    return {
+      success: true,
+      message: "Session Log created successfully",
+      sessionLog: sessionLog
+    }
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      const errors = err.flatten().fieldErrors;
 
-  //   console.log(sessionLog)
-  //   // return sessionLog
+      throw err
+    }
 
-  //   return {
-  //     success: true,
-  //     message: "Session Log created successfully",
-  //     sessionLog: sessionLog
-  //   }
-  // } catch (err) {
-  //   if (err instanceof z.ZodError) {
-  //     const errors = err.flatten().fieldErrors;
-
-  //     throw err
-  //   }
-
-  //   throw err;
-  // }
+    throw err;
+  }
 }
