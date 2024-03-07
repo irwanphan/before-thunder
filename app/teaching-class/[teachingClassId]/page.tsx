@@ -23,7 +23,7 @@ const TeachingClassDetailPage = async ({params}: {params: {teachingClassId: numb
                 <Text size="md">Setiap Hari {teachingClass.setiapHari}</Text>
                 <Text size="md">Jumlah Pertemuan {teachingClass.jumlahPertemuan}</Text>
                 <Text size="md">Periode {teachingClass.periode}</Text>
-                <Link href={`/teaching-class/${teachingClassId}/create-log`}>
+                <Link href={`/teaching-class/${teachingClassId}/create-session-log`}>
                     <Button mt={16}>Catat sesi</Button>
                 </Link>
             </Card>
