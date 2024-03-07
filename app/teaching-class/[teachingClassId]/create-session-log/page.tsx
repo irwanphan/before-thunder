@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Button, Checkbox, Input, Text, TextInput } from "@mantine/core"
+import { Box, Button, Checkbox, Input, Notification, Text, TextInput } from "@mantine/core"
 import classes from "./create.module.css"
 import { useFormState, useFormStatus } from "react-dom"
 import createSessionLog from "./_actions/create-session-log"
@@ -41,35 +41,40 @@ const CreateSessionLogPage = () => {
 
             <form action={formAction}>
             
-            <Input type="hidden" name="teachingClassId" value={teachingClassId} />
+                <Input type="hidden" name="teachingClassId" value={teachingClassId} />
 
-            <Box mt="md"
-                className={classes.box}
-            >
-                <Checkbox
-                    label="Kelas Pengganti"
-                    name="kelasPengganti"
-                    styles={{ input: { cursor: 'pointer' } }}
+                <Box mt="md"
+                    className={classes.box}
+                >
+                    <Checkbox
+                        label="Kelas Pengganti"
+                        name="kelasPengganti"
+                        styles={{ input: { cursor: 'pointer' } }}
+                    />
+                </Box>
+
+                <TextInput 
+                    mt="md"
+                    label="Materi Ajar" 
+                    placeholder="e.g. Pengenalan Metode Penelitian X" 
+                    name="materiAjar"
+                    classNames={classes} 
                 />
-            </Box>
+                <TextInput 
+                    mt="md"
+                    label="Catatan" 
+                    placeholder="e.g. Siswa X tidak hadir" 
+                    name="catatan"
+                    classNames={classes} 
+                />
 
-            <TextInput 
-                mt="md"
-                label="Materi Ajar" 
-                placeholder="e.g. Pengenalan Metode Penelitian X" 
-                name="materiAjar"
-                classNames={classes} 
-            />
-            <TextInput 
-                mt="md"
-                label="Catatan" 
-                placeholder="e.g. Siswa X tidak hadir" 
-                name="catatan"
-                classNames={classes} 
-            />
+                <SubmitButton />
 
-            <SubmitButton />
             </form>
+            {
+                formState?.success === true && 
+                <Notification title="Berhasil simpan catatan sesi ajar" />
+            }
         </Box>
     )
 }
