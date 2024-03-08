@@ -1,20 +1,19 @@
 'use client'
 
 import { useFormState, useFormStatus } from "react-dom"
-import { Box, Button, MultiSelect, Notification, NumberInput, Select, Text, TextInput } from "@mantine/core"
+import { Box, Card, Button, MultiSelect, NumberInput, Select, Text, TextInput } from "@mantine/core"
 import { DatePickerInput } from "@mantine/dates"
 import createTeachingClass from "./_actions/create-teaching-class"
 import classes from "./create.module.css"
+import { notifications } from "@mantine/notifications"
+import { useRouter } from 'next/navigation'
 
 const SubmitButton = () => {
     const { pending } = useFormStatus();
     return (
         <Button
             mt="md"
-            size="lg"
             className={classes.control}
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'navy' }}
             type="submit"
             disabled={pending}
         >
@@ -29,9 +28,17 @@ const CreateTeachingClassPage = () => {
         message: "",
         teachingClass: undefined,
     })
+    const router = useRouter()
+    if(formState.success) {
+        notifications.show({
+            title: "Simpan kelas ajar",
+            message: 'Anda bakal di-redirect ke halaman sebelumnya ya! 🤥',
+        })
+        // router.push('/teaching-class', { scroll: false }) 
+    }
 
     return (
-        <Box>
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Text>Kelas Ajar</Text>
 
             <form action={formAction}>
@@ -104,11 +111,7 @@ const CreateTeachingClassPage = () => {
 
                 <SubmitButton />
             </form>
-            {
-                formState?.success === true &&
-                <Notification title="Berhasil simpan kelas ajar" />
-            }
-        </Box>
+        </Card>
     )
 }
 

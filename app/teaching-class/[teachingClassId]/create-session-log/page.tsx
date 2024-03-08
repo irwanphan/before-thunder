@@ -1,25 +1,24 @@
 'use client'
 
-import { Box, Button, Checkbox, Input, Notification, Text, TextInput } from "@mantine/core"
+import { Box, Card, Button, Checkbox, Input, Text, TextInput } from "@mantine/core"
 import classes from "./create.module.css"
 import { useFormState, useFormStatus } from "react-dom"
 import createSessionLog from "./_actions/create-session-log"
-import { notFound, useParams } from 'next/navigation';
+import { notFound, useParams, useRouter } from 'next/navigation';
 
 const SubmitButton = () => {
-    const { pending } = useFormStatus();
+    const { pending,  } = useFormStatus();
     return (
-        <Button
-            mt="md"
-            size="lg"
-            className={classes.control}
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'navy' }}
-            type="submit"
-            disabled={pending}
-        >
-            Simpan
-        </Button>
+        <>
+            <Button
+                mt="md"
+                className={classes.control}
+                type="submit"
+                disabled={pending}
+            >
+                Simpan
+            </Button>
+        </>
     )
 }
 
@@ -32,15 +31,16 @@ const CreateSessionLogPage = () => {
 
     const params = useParams();
     const { teachingClassId } = params
+    const router = useRouter()
 
     if (teachingClassId == null) return notFound();
+    if (formState.success) { router.push(`/teaching-class/${teachingClassId}`) }
 
     return (
-        <Box>
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Text>Catat Sesi</Text>
 
             <form action={formAction}>
-            
                 <Input type="hidden" name="teachingClassId" value={teachingClassId} />
 
                 <Box mt="md"
@@ -52,7 +52,6 @@ const CreateSessionLogPage = () => {
                         styles={{ input: { cursor: 'pointer' } }}
                     />
                 </Box>
-
                 <TextInput 
                     mt="md"
                     label="Materi Ajar" 
@@ -69,13 +68,8 @@ const CreateSessionLogPage = () => {
                 />
 
                 <SubmitButton />
-
             </form>
-            {
-                formState?.success === true && 
-                <Notification title="Berhasil simpan catatan sesi ajar" />
-            }
-        </Box>
+        </Card>
     )
 }
 
