@@ -1,7 +1,8 @@
 import prisma from "@components/prisma";
 import { Button, Card, Text } from "@mantine/core";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+import TeachingClassDetailTable from "./_components/TeachingClassDetailTable";
 
 const TeachingClassDetailPage = async ({params}: {params: {teachingClassId: number}}) => {
 
@@ -13,6 +14,8 @@ const TeachingClassDetailPage = async ({params}: {params: {teachingClassId: numb
     });
     
     if (teachingClass == null) return notFound();
+    const teachingClassSessions = await getTeachingClassSessions(teachingClassId);
+    // console.log(teachingClassSessions);
 
     return (
         <div>
@@ -28,8 +31,23 @@ const TeachingClassDetailPage = async ({params}: {params: {teachingClassId: numb
                 </Link>
             </Card>
 
+            <Card shadow="sm" padding="lg" radius="md" withBorder mt={16}>
+                <Text>Sesi Ajar</Text>
+                <TeachingClassDetailTable teachingClassSessions={teachingClassSessions} />
+            </Card>
         </div>
     );
+}
+
+async function getTeachingClassSessions(teachingClassId: number) {
+    return await prisma.sessionLog.findMany({
+        where: {
+            teachingClassId: Number(teachingClassId),
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
 }
 
 export default TeachingClassDetailPage;
