@@ -18,7 +18,7 @@ const links = [
     ],
   },
   { link: '/profile', label: 'Profil Saya' },
-  { link: '/logout', label: 'Keluar' },
+//   { link: '/logout', label: 'Keluar' },
 ];
 
 export function Navbar() {

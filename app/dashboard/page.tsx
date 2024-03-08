@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Text, SimpleGrid, UnstyledButton, Anchor, Group, useMantineTheme,} from '@mantine/core';
+import { Box, Button, Text, SimpleGrid, UnstyledButton, Anchor, Group, useMantineTheme,} from '@mantine/core';
 import {
     IconCreditCard,
     IconBuildingBank,
@@ -13,6 +13,7 @@ import {
     IconCoin,
 } from '@tabler/icons-react';
 import classes from './Dashboard.module.css';
+import { signOut } from 'next-auth/react'
   
 const mockdata = [
     { title: 'Credit cards', icon: IconCreditCard, color: 'violet' },
@@ -50,6 +51,10 @@ const DashboardPage = () => {
             <SimpleGrid cols={3} mt="md">
                 {items}
             </SimpleGrid>
+
+            <Button
+                onClick={() => signOut()}
+            >OUT</Button>
         </Box>
     );
 }
