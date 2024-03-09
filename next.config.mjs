@@ -15,7 +15,10 @@ const config = {
 const nextConfig = withPWA({
   dest: 'public',
   disable: !isProduction,
-  runtimeCaching
+  runtimeCaching,
+  register: true,
+  skipWaiting: true,
+  buildExcludes: [/test/, /tests/, /stories/, /coverage/, /docs/, /middleware-manifest.json$/],
 })(
   config
 );
