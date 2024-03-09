@@ -44,14 +44,14 @@ export const authOptions: AuthOptions = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        // token.userId = user.id;
+        token.userId = user.id;
         // token.role = user.role;
       }
       return token;
     },
     session({ session, token }) {
       if (token && session.user) {
-        // session.user.email = token.email;
+        session.user.email = token.email;
         // session.user.role = token.role;
       }
 
