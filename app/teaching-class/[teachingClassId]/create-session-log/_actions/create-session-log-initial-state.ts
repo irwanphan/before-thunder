@@ -1,7 +1,11 @@
-import { SessionLogType } from '@lib/types/sessionLogType';
+type InitialSessionLogType = {
+  kelasPengganti: boolean;
+  materiAjar: string;
+  catatan: string;
+};
 
-export const initialState : SessionLogType = {
+export const initialState: InitialSessionLogType = {
   kelasPengganti: false,
-  materiAjar: "",
-  catatan: ""
-}
+  materiAjar: '',
+  catatan: '',
+};

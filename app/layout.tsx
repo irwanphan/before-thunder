@@ -1,8 +1,9 @@
 import '@mantine/core/styles.css';
 import React from 'react';
 import { MantineProvider, ColorSchemeScript, Box } from '@mantine/core';
-import { theme } from '../theme';
 import Navbar from '@components/Navbar';
+import CustomHeader from '@components/CustomHeader';
+import { theme } from '../theme';
 
 export const metadata = {
   title: 'BT',
@@ -14,18 +15,19 @@ export default function RootLayout({ children }: { children: any }) {
     <html lang="en">
       <head>
         <ColorSchemeScript />
-        <link rel="shortcut icon" href="/favicon.svg" />
+        {/* <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
-        />
+        /> */}
+        <link rel="manifest" href="/manifest.json" />
+
+        <CustomHeader />
       </head>
       <body>
         <MantineProvider theme={theme}>
           <Navbar />
-          <Box p="lg">
-            {children}
-          </Box>
+          <Box p="lg">{children}</Box>
         </MantineProvider>
       </body>
     </html>

@@ -1,6 +1,6 @@
-import { TeachingClassType } from "@lib/types/teachingClassType";
+import { TeachingClassType } from '@/types/teachingClassType';
 
-export const initialState : TeachingClassType = {
+export const initialState: TeachingClassType = {
   authorId: undefined,
   prodi: '',
   tahunAkademik: '',
@@ -11,5 +11,5 @@ export const initialState : TeachingClassType = {
   setiapHari: [],
   periode: '',
   periodeMulai: undefined,
-  periodeSelesai: undefined
-}
+  periodeSelesai: undefined,
+};

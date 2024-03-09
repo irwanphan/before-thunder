@@ -1,19 +1,16 @@
-"use server";
+'use server';
 
-import prisma from "@/components/prisma";
-import { TeachingClassType } from "@lib/types/teachingClassType";
-import { z } from "zod";
+import { z } from 'zod';
+import prisma from '@/components/prisma';
+// import { TeachingClassType } from '@/types/teachingClassType';
 
-type CreateTeachingClassResponse = {
-  success: boolean,
-  message: string,
-  journal?: TeachingClassType
-}
+// type CreateTeachingClassResponse = {
+//   success: boolean;
+//   message: string;
+//   journal?: TeachingClassType;
+// };
 
-export default async function createTeachingClass(
-  prevState: any,
-  formData: FormData,
-) {
+export default async function createTeachingClass(prevState: any, formData: FormData) {
   const schema = z.object({
     // authorId: z.string(),
     prodi: z.string(),
@@ -27,7 +24,7 @@ export default async function createTeachingClass(
     // periodeMulai: z.string(),
     // periodeSelesai: z.string(),
   });
-  console.log(formData)
+  // console.log(formData);
   const parsed = schema.safeParse({
     prodi: formData.get('prodi'),
     tahunAkademik: formData.get('tahunAkademik'),
@@ -35,23 +32,22 @@ export default async function createTeachingClass(
     kelas: formData.get('kelas'),
     mataKuliah: formData.get('mataKuliah'),
     jumlahPertemuan: Number(formData.get('jumlahPertemuan')),
-    setiapHari: formData.get('setiapHari')?.toString().split(", "),
+    setiapHari: formData.get('setiapHari')?.toString().split(', '),
     periode: formData.get('periode'),
   });
 
   if (!parsed.success) {
-    console.log(parsed.error.issues)
+    // console.log(parsed.error.issues);
     return {
-      success: false, 
-      message: "Failed to create teaching class",
+      success: false,
+      message: 'Failed to create teaching class',
       // parsed
     };
   }
-  const data = parsed.data;
+  // const data = parsed.data;
+  const { data } = parsed;
 
   try {
-
-
     const teachingClass = await prisma.teachingClass.create({
       data: {
         authorId: 1,
@@ -61,26 +57,26 @@ export default async function createTeachingClass(
         kelas: data.kelas,
         mataKuliah: data.mataKuliah,
         jumlahPertemuan: data.jumlahPertemuan,
-        setiapHari: data.setiapHari.join(", "),
+        setiapHari: data.setiapHari.join(', '),
         periode: 'asdf',
         periodeMulai: new Date('2012-10-10'),
         periodeSelesai: new Date('2012-10-10'),
       },
     });
 
-    console.log(teachingClass)
+    // console.log(teachingClass);
     // return teachingClass
 
     return {
       success: true,
-      message: "Teaching Class created successfully",
-      teachingClass: teachingClass
-    }
+      message: 'Teaching Class created successfully',
+      teachingClass: teachingClass,
+    };
   } catch (err) {
     if (err instanceof z.ZodError) {
-      const errors = err.flatten().fieldErrors;
+      // const errors = err.flatten().fieldErrors;
 
-      throw err
+      throw err;
     }
 
     throw err;
