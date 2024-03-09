@@ -1,17 +1,21 @@
 import prisma from '@components/prisma';
-import TeachingClassTable from './_components/TeachingClassTable';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { Button, Card, Flex, Text } from '@mantine/core';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@lib/auth-options';
-import { redirect } from 'next/navigation';
+import TeachingClassTable from './_components/TeachingClassTable';
+
+async function getTeachingClasses() {
+  return await prisma.teachingClass.findMany();
+}
 
 const TeachingClassPage = async () => {
   const session = await getServerSession(authOptions);
   if (!session || session === null) {
     redirect('/auth/signin');
   }
-  console.log('session: ', session);
+  // console.log('session: ', session);
   const email = session?.user?.email;
   if (!email) {
     redirect('/auth/signin');
@@ -44,9 +48,5 @@ const TeachingClassPage = async () => {
     </Card>
   );
 };
-
-async function getTeachingClasses() {
-  return await prisma.teachingClass.findMany();
-}
 
 export default TeachingClassPage;
