@@ -19,7 +19,7 @@ export default function SignInForm() {
   return (
     <Flex direction='column' align='center' justify='center' w='100%' h='100%'>
       <Card maw='640px' w='100%'>
-        <Text>
+        <Text size='lg'>
           Enter your email below to login
         </Text>
         <TextInput

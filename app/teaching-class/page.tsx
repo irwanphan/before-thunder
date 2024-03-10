@@ -6,8 +6,14 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@lib/auth-options';
 import TeachingClassTable from './_components/TeachingClassTable';
 
-async function getTeachingClasses() {
-  return await prisma.teachingClass.findMany();
+async function getTeachingClasses(userId: number) {
+  return await prisma.teachingClass.findMany(
+    { 
+      where: {
+        authorId: userId
+      }
+    }
+  );
 }
 
 const TeachingClassPage = async () => {
@@ -30,9 +36,8 @@ const TeachingClassPage = async () => {
     redirect('/auth/signin');
   }
 
-  const teachingClasses = await getTeachingClasses();
-  // { user: session?.user }
-  // console.log(teachingClasses);
+  const teachingClasses = await getTeachingClasses(user.id);
+  console.log(teachingClasses);
 
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -44,7 +49,13 @@ const TeachingClassPage = async () => {
           <Button>Tambah Baru</Button>
         </Link>
       </Flex>
-      <TeachingClassTable teachingClasses={teachingClasses} />
+      {
+        teachingClasses.length === 0 ?
+          <Text mt={16}>
+            Belum ada kelas ajar yang dibuat.
+          </Text>
+        : <TeachingClassTable teachingClasses={teachingClasses} />
+      }
     </Card>
   );
 };
