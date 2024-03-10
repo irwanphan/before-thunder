@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, Group, Center, Burger, Container } from '@mantine/core';
+import { Menu, Group, Center, Burger, Container, Anchor } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
 import classes from './Navbar.module.css';
+import { ColorSchemeToggle } from '@components/ColorSchemeToggle/ColorSchemeToggle';
 
 const links = [
   { link: '/dashboard', label: 'Dashboard' },
@@ -64,9 +65,12 @@ export function Navbar() {
     <header className={classes.header}>
       <Container size="md">
         <div className={classes.inner}>
-          <span>the ASDF</span>
+          <Anchor href='/' 
+            className={classes.logo} size='lg' fw={700} lts={1}
+            >Before</Anchor>
           <Group gap={5} visibleFrom="sm">
             {items}
+            <ColorSchemeToggle />
           </Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
         </div>

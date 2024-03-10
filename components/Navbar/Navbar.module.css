@@ -29,3 +29,13 @@
 .linkLabel {
     margin-right: rem(5px);
 }
+
+.logo {
+    font-size: var(--mantine-font-size-lg);
+    color: var(--mantine-color-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.logo:hover {
+    color: var(--mantine-color-primary);
+}
