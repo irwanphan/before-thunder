@@ -1,18 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, Group, Center, Burger, Container, Anchor, Button, Text } from '@mantine/core';
+import { Menu, Group, Center, Burger, Container, Anchor, Button, Text, Box, Collapse, Divider, Drawer, ScrollArea, UnstyledButton, rem, useMantineTheme } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown, IconDoorExit } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@components/ColorSchemeToggle/ColorSchemeToggle';
 import classes from './Navbar.module.css';
 import { signOut, useSession } from 'next-auth/react';
 
-
 const Navbar = () => {
   const session = useSession();
-
-  const [opened, { toggle }] = useDisclosure(false);
+  const theme = useMantineTheme();
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
 
   const links = [
     { link: '/dashboard', label: 'Dashboard' },
@@ -97,11 +97,39 @@ const Navbar = () => {
                   </Button>
                   <ColorSchemeToggle />
                 </Group>
-                <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+                <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
               </> 
           }
         </div>
       </Container>
+
+      <Drawer
+        opened={drawerOpened}
+        onClose={closeDrawer}
+        size="100%"
+        padding="lg"
+        title="Before App"
+        hiddenFrom="sm"
+        zIndex={1000000}
+      >
+        <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md" p='md'>
+          <Divider my="sm" />
+
+          {items}
+
+          <Divider my="sm" />
+
+          <Button variant='outline' color='orange' fs='16px' radius='md'
+            onClick={() => { 
+              signOut({
+                callbackUrl: '/'
+              }) 
+            }}
+          >
+            Logout - <IconDoorExit size={16} />
+          </Button>
+        </ScrollArea>
+      </Drawer>
     </header>
   );
 }
