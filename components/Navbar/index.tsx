@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, Group, Center, Burger, Container, Anchor } from '@mantine/core';
+import { Menu, Group, Center, Burger, Container, Anchor, Button, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown } from '@tabler/icons-react';
+import { IconChevronDown, IconDoorExit } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@components/ColorSchemeToggle/ColorSchemeToggle';
 import classes from './Navbar.module.css';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 
 const Navbar = () => {
@@ -74,14 +74,27 @@ const Navbar = () => {
           {
             (!session || !session?.data?.user)
             ? <>
-                <Group gap={8} visibleFrom="sm">
-                  <Link href='/auth/signin' className={classes.link}>Login</Link> 
+                <Group gap={8}>
+                  <Link href='/auth/signin' className={classes.link}>
+                    <Text c='grey.5' fw={500} size='md'>
+                      Login
+                    </Text>
+                  </Link> 
                   <ColorSchemeToggle />
                 </Group>
               </>
             : <>
                 <Group gap={6} visibleFrom="sm">
                   {items}
+                  <Button variant='white' color='grey.5' px={8} fs='16px' radius='md'
+                    onClick={() => { 
+                      signOut({
+                        callbackUrl: '/'
+                      }) 
+                    }}
+                  >
+                    Logout - <IconDoorExit size={16} />
+                  </Button>
                   <ColorSchemeToggle />
                 </Group>
                 <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
