@@ -4,26 +4,26 @@ import Link from 'next/link';
 import { Menu, Group, Center, Burger, Container, Anchor } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
-import classes from './Navbar.module.css';
 import { ColorSchemeToggle } from '@components/ColorSchemeToggle/ColorSchemeToggle';
+import classes from './Navbar.module.css';
 
-const links = [
-  { link: '/dashboard', label: 'Dashboard' },
-  { link: '/teaching-class', label: 'Kelas Ajar' },
-  {
-    link: '#1',
-    label: 'Master Data',
-    links: [
-      { link: '/academic-year', label: 'Tahun akademik' },
-      { link: '/department', label: 'Program Studi' },
-    ],
-  },
-  { link: '/profile', label: 'Profil Saya' },
-  //   { link: '/logout', label: 'Keluar' },
-];
-
-export function Navbar() {
+const Navbar = () => {
   const [opened, { toggle }] = useDisclosure(false);
+
+  const links = [
+    { link: '/dashboard', label: 'Dashboard' },
+    { link: '/teaching-class', label: 'Kelas Ajar' },
+    {
+      link: '#1',
+      label: 'Master Data',
+      links: [
+        { link: '/academic-year', label: 'Tahun akademik' },
+        { link: '/department', label: 'Program Studi' },
+      ],
+    },
+    { link: `/profile`, label: 'Profil Saya' },
+    //   { link: '/logout', label: 'Keluar' },
+  ];
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
