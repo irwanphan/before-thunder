@@ -1,6 +1,6 @@
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript, Box } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, Box, Flex } from '@mantine/core';
 import Navbar from '@components/Navbar';
 import CustomHeader from '@components/CustomHeader';
 import { theme } from '../theme';
@@ -27,7 +27,11 @@ export default function RootLayout({ children }: { children: any }) {
       <body>
         <MantineProvider theme={theme}>
           <Navbar />
-          <Box p="lg">{children}</Box>
+          <Flex direction='column' align='center' justify='center' w='100%' h='100%'>
+            <Box p='lg' maw='1020px' w='100%'>
+              {children}
+            </Box>
+          </Flex>
         </MantineProvider>
       </body>
     </html>
