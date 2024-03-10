@@ -6,8 +6,12 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@components/ColorSchemeToggle/ColorSchemeToggle';
 import classes from './Navbar.module.css';
+import { useSession } from 'next-auth/react';
+
 
 const Navbar = () => {
+  const session = useSession();
+
   const [opened, { toggle }] = useDisclosure(false);
 
   const links = [
@@ -22,7 +26,6 @@ const Navbar = () => {
       ],
     },
     { link: `/profile`, label: 'Profil Saya' },
-    //   { link: '/logout', label: 'Keluar' },
   ];
 
   const items = links.map((link) => {
@@ -68,11 +71,22 @@ const Navbar = () => {
           <Anchor href='/' 
             className={classes.logo} size='lg' fw={700} lts={1}
             >Before</Anchor>
-          <Group gap={5} visibleFrom="sm">
-            {items}
-            <ColorSchemeToggle />
-          </Group>
-          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+          {
+            (!session || !session?.data?.user)
+            ? <>
+                <Group gap={8} visibleFrom="sm">
+                  <Link href='/auth/signin' className={classes.link}>Login</Link> 
+                  <ColorSchemeToggle />
+                </Group>
+              </>
+            : <>
+                <Group gap={6} visibleFrom="sm">
+                  {items}
+                  <ColorSchemeToggle />
+                </Group>
+                <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+              </> 
+          }
         </div>
       </Container>
     </header>
