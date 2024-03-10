@@ -23,7 +23,11 @@ const ProfilePage = () => {
         </Box>
         
         <Button variant='outline' color='orange'
-          onClick={() => { signOut() }}
+          onClick={() => { 
+            signOut({
+              callbackUrl: '/'
+            }) 
+          }}
         >
           Logout - <IconDoorExit size={16} />
         </Button>
