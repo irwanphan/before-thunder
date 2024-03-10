@@ -1,8 +1,9 @@
 'use client';
 
-import { Button, Card, Text, TextInput } from '@mantine/core';
+import { Button, Card, Flex, Text, TextInput } from '@mantine/core';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import inputStyles from '@lib/inputStyles.module.css'
 
 type FormLoginValues = {
   email: string;
@@ -16,48 +17,55 @@ export default function SignInForm() {
   });
 
   return (
-    <Card>
-      <Text>It&aposs Raining</Text>
-      Enter your email below to login
-      <TextInput
-        id="username"
-        type="text"
-        label="Email"
-        placeholder="user@app.id"
-        value={formLoginValues.email}
-        onChange={(e) => {
-          setFormLoginValues({
-            ...formLoginValues,
-            email: e.target.value,
-          });
-        }}
-      />
-      <TextInput
-        id="password"
-        type="password"
-        label="Password"
-        placeholder="password"
-        value={formLoginValues.password}
-        onChange={(e) => {
-          setFormLoginValues({
-            ...formLoginValues,
-            password: e.target.value,
-          });
-        }}
-      />
-      <Button
-        className="w-full"
-        onClick={() =>
-          signIn('credentials', {
-            email: formLoginValues.email,
-            password: formLoginValues.password,
-            redirect: true,
-            callbackUrl: '/',
-          })
-        }
-      >
-        Log In
-      </Button>
-    </Card>
+    <Flex direction='column' align='center' justify='center' w='100%' h='100%'>
+      <Card maw='640px' w='100%'>
+        <Text>
+          Enter your email below to login
+        </Text>
+        <TextInput
+          id="username"
+          type="text"
+          classNames={inputStyles}
+          mt={16}
+          label="Email"
+          placeholder="user@app.id"
+          value={formLoginValues.email}
+          onChange={(e) => {
+            setFormLoginValues({
+              ...formLoginValues,
+              email: e.target.value,
+            });
+          }}
+        />
+        <TextInput
+          id="password"
+          type="password"
+          classNames={inputStyles}
+          mt={16}
+          label="Password"
+          placeholder="password"
+          value={formLoginValues.password}
+          onChange={(e) => {
+            setFormLoginValues({
+              ...formLoginValues,
+              password: e.target.value,
+            });
+          }}
+        />
+        <Button
+          mt={16}
+          onClick={() =>
+            signIn('credentials', {
+              email: formLoginValues.email,
+              password: formLoginValues.password,
+              redirect: true,
+              callbackUrl: '/',
+            })
+          }
+        >
+          Log In
+        </Button>
+      </Card>
+    </Flex>
   );
 }

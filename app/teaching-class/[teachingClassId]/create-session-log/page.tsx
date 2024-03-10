@@ -4,13 +4,13 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { notFound, useParams, useRouter } from 'next/navigation';
 import { Box, Card, Button, Checkbox, Input, Text, TextInput } from '@mantine/core';
 import createSessionLog from './_actions/create-session-log';
-import classes from './create.module.css';
+import inputStyles from '@lib/inputStyles.module.css';
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
     <>
-      <Button mt="md" className={classes.control} type="submit" disabled={pending}>
+      <Button mt="md" className={inputStyles.control} type="submit" disabled={pending}>
         Simpan
       </Button>
     </>
@@ -40,7 +40,7 @@ const CreateSessionLogPage = () => {
       <form action={formAction}>
         <Input type="hidden" name="teachingClassId" value={teachingClassId} />
 
-        <Box mt="md" className={classes.box}>
+        <Box mt="md" className={inputStyles.box}>
           <Checkbox
             label="Kelas Pengganti"
             name="kelasPengganti"
@@ -52,14 +52,14 @@ const CreateSessionLogPage = () => {
           label="Materi Ajar"
           placeholder="e.g. Pengenalan Metode Penelitian X"
           name="materiAjar"
-          classNames={classes}
+          classNames={inputStyles}
         />
         <TextInput
           mt="md"
           label="Catatan"
           placeholder="e.g. Siswa X tidak hadir"
           name="catatan"
-          classNames={classes}
+          classNames={inputStyles}
         />
 
         <SubmitButton />
