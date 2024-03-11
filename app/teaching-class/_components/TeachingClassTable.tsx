@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import classes from './TeachingClassTable.module.css';
+import classes from '@lib/tableStyles.module.css';
 
 type TeachingClassType = {
   id: number;
