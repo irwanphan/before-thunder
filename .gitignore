@@ -98,6 +98,9 @@ dist
 # public
 public/sw.js
 public/workbox-*.js
+**/public/workbox-*.js
+**/public/sw.js
+**/public/worker-*.js
 
 # vuepress build output
 .vuepress/dist
