@@ -34,7 +34,7 @@ const CreateTeachingClassPage = () => {
 
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Text>Kelas Ajar</Text>
+      <Text>Kelas Ajar Baru</Text>
 
       <form action={formAction}>
         <Select

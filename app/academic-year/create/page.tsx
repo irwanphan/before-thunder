@@ -4,7 +4,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { Card, Button, Text, TextInput } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/navigation';
-import createDepartment from './_actions/create-department';
+import createAcademicYear from './_actions/create-academic-year';
 import inputStyles from '@lib/inputStyles.module.css';
 
 const SubmitButton = () => {
@@ -16,11 +16,11 @@ const SubmitButton = () => {
   );
 };
 
-const CreateDepartmentPage = () => {
-  const [formState, formAction] = useFormState(createDepartment, {
+const CreateacademicYearPage = () => {
+  const [formState, formAction] = useFormState(createAcademicYear, {
     success: false,
     message: '',
-    department: undefined,
+    academicYear: undefined,
   });
   const router = useRouter();
   if (formState.success) {
@@ -28,7 +28,7 @@ const CreateDepartmentPage = () => {
       title: 'Simpan Tahun Akademik Berhasil',
       message: 'Anda bakal di-redirect ke halaman sebelumnya ya! 🤥',
     });
-    router.push('/department', { scroll: false });
+    router.push('/academic-year', { scroll: false });
   }
 
   return (
@@ -50,4 +50,4 @@ const CreateDepartmentPage = () => {
   );
 };
 
-export default CreateDepartmentPage;
+export default CreateacademicYearPage;

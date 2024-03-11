@@ -6,24 +6,20 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@lib/auth-options';
 import { notFound } from 'next/navigation';
 
-export default async function createDepartment(prevState: any, formData: FormData) {
+export default async function createAcademicYear(prevState: any, formData: FormData) {
   const schema = z.object({
     name: z.string(),
-    headName: z.string(),
-    logo: z.string(),
   });
   // console.log(formData);
   const parsed = schema.safeParse({
     name: formData.get('name'),
-    headName: formData.get('headName'),
-    logo: formData.get('logo') || '',
   });
 
   if (!parsed.success) {
     // console.log(parsed.error.issues);
     return {
       success: false,
-      message: 'Failed to create department',
+      message: 'Failed to create academic year',
     };
   }
   const { data } = parsed;
@@ -47,19 +43,17 @@ export default async function createDepartment(prevState: any, formData: FormDat
       return notFound;
     }
     
-    const department = await prisma.department.create({
+    const academicYear = await prisma.academicYear.create({
       data: {
         authorId: 1,
         name: data.name,
-        headName: data.headName,
-        logo: data.logo,
       },
     });
-    // console.log(department);
+    // console.log(academicYear);
     return {
       success: true,
       message: 'Department created successfully',
-      department: department,
+      academicYear: academicYear,
     };
   } catch (err) {
     if (err instanceof z.ZodError) {
