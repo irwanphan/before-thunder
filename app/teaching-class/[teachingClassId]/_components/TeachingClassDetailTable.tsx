@@ -1,6 +1,6 @@
 'use client';
 
-import classes from './TeachingClassDetailTable.module.css';
+import classes from '@lib/tableStyles.module.css';
 
 type TeachingClassDetailType = {
   id: number;
