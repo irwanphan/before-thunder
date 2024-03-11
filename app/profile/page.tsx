@@ -7,7 +7,7 @@ import { IconDoorExit } from '@tabler/icons-react';
 
 const ProfilePage = () => {
   const { data } = useSession();
-  console.log(data);
+  // console.log(data);
 
   const userProfile = data?.user;
   if (userProfile == null) return notFound();
