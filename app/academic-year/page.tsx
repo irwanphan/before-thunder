@@ -56,6 +56,6 @@ const AcademicYearPage = async () => {
         }
         </Card>
     );
-    }
+}
 
 export default AcademicYearPage;

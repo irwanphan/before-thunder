@@ -16,11 +16,11 @@ const SubmitButton = () => {
   );
 };
 
-const CreateacademicYearPage = () => {
+const CreateAcademicYearPage = () => {
   const [formState, formAction] = useFormState(createAcademicYear, {
     success: false,
     message: '',
-    academicYear: undefined,
+    // academicYear: null,
   });
   const router = useRouter();
   if (formState.success) {
@@ -50,4 +50,4 @@ const CreateacademicYearPage = () => {
   );
 };
 
-export default CreateacademicYearPage;
+export default CreateAcademicYearPage;

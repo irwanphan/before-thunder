@@ -20,7 +20,7 @@ const CreateDepartmentPage = () => {
   const [formState, formAction] = useFormState(createDepartment, {
     success: false,
     message: '',
-    department: undefined,
+    // department: undefined,
   });
   const router = useRouter();
   if (formState.success) {

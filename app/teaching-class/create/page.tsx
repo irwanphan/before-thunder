@@ -21,7 +21,7 @@ const CreateTeachingClassPage = () => {
   const [formState, formAction] = useFormState(createTeachingClass, {
     success: false,
     message: '',
-    teachingClass: undefined,
+    // teachingClass: undefined,
   });
   const router = useRouter();
   if (formState.success) {
