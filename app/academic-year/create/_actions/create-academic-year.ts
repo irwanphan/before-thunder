@@ -20,6 +20,7 @@ export default async function createAcademicYear(prevState: any, formData: FormD
     return {
       success: false,
       message: 'Failed to create academic year',
+      // academicYear: undefined,
     };
   }
   const { data } = parsed;
@@ -45,7 +46,7 @@ export default async function createAcademicYear(prevState: any, formData: FormD
     
     const academicYear = await prisma.academicYear.create({
       data: {
-        authorId: 1,
+        authorId: user.id,
         name: data.name,
       },
     });

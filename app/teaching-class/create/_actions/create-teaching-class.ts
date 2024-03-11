@@ -2,6 +2,9 @@
 
 import { z } from 'zod';
 import prisma from '@/components/prisma';
+import { authOptions } from '@lib/auth-options';
+import { getServerSession } from 'next-auth';
+import { notFound } from 'next/navigation';
 // import { TeachingClassType } from '@/types/teachingClassType';
 
 // type CreateTeachingClassResponse = {
@@ -48,9 +51,26 @@ export default async function createTeachingClass(prevState: any, formData: Form
   const { data } = parsed;
 
   try {
+    const session = await getServerSession(authOptions);
+    if (!session || session === null) {
+      return notFound;
+    }
+
+    const { email } = session.user;
+    if (!email) {
+      return notFound;
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (!user) {
+      return notFound;
+    }
+    
     const teachingClass = await prisma.teachingClass.create({
       data: {
-        authorId: 1,
+        authorId: user.id,
         prodi: data.prodi,
         tahunAkademik: data.tahunAkademik,
         semester: data.semester,
@@ -58,7 +78,7 @@ export default async function createTeachingClass(prevState: any, formData: Form
         mataKuliah: data.mataKuliah,
         jumlahPertemuan: data.jumlahPertemuan,
         setiapHari: data.setiapHari.join(', '),
-        periode: 'asdf',
+        periode: data.periode,
         periodeMulai: new Date('2012-10-10'),
         periodeSelesai: new Date('2012-10-10'),
       },

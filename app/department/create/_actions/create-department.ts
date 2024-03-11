@@ -49,7 +49,7 @@ export default async function createDepartment(prevState: any, formData: FormDat
     
     const department = await prisma.department.create({
       data: {
-        authorId: 1,
+        authorId: user.id,
         name: data.name,
         headName: data.headName,
         logo: data.logo,

@@ -28,7 +28,7 @@ const AcademicYearPage = async () => {
 
     const user = await prisma.user.findUnique({
         where: {
-        email,
+            email,
         },
     });
     if (!user) {
@@ -39,10 +39,10 @@ const AcademicYearPage = async () => {
         <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Flex>
             <Text size="lg" mr={16}>
-            Daftar Tahun Akademik
+                Daftar Tahun Akademik
             </Text>
-            <Link href="/department/create" passHref>
-            <Button>Tambah Baru</Button>
+            <Link href="/academic-year/create" passHref>
+                <Button>Tambah Baru</Button>
             </Link>
         </Flex>
         {
