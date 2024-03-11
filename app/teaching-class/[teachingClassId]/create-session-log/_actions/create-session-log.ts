@@ -2,13 +2,8 @@
 
 import { z } from 'zod';
 import prisma from '@/components/prisma';
-// import { SessionLogType } from '@/types/sessionLogType';
-
-// type CreateTeachingClassResponse = {
-//   success: boolean;
-//   message: string;
-//   sessionLog?: SessionLogType;
-// };
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@lib/auth-options';
 
 export default async function createSessionLog(prevState: any, formData: FormData) {
   const schema = z.object({
@@ -37,6 +32,32 @@ export default async function createSessionLog(prevState: any, formData: FormDat
   // console.log('parsed data: ', data);
 
   try {
+    const session = await getServerSession(authOptions);
+    if (!session || session === null) {
+      return {
+        success: false,
+        message: 'User session not found',
+      };
+    }
+
+    const { email } = session.user;
+    if (!email) {
+      return {
+        success: false,
+        message: 'User email not found',
+      };
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (!user) {
+      return {
+        success: false,
+        message: 'User not found',
+      };
+    }
+    
     const sessionLog = await prisma.sessionLog.create({
       data: {
         teachingClass: {
@@ -50,9 +71,6 @@ export default async function createSessionLog(prevState: any, formData: FormDat
       },
     });
 
-    // console.log(sessionLog);
-    // return sessionLog
-
     return {
       success: true,
       message: 'Session Log created successfully',
@@ -60,11 +78,14 @@ export default async function createSessionLog(prevState: any, formData: FormDat
     };
   } catch (err) {
     if (err instanceof z.ZodError) {
-      // const errors = err.flatten().fieldErrors;
-
-      throw err;
+      return {
+        success: false,
+        message: 'Validation error',
+      };
     }
-
-    throw err;
+    return {
+      success: false,
+      message: 'Internal server error',
+    };
   }
 }
