@@ -4,6 +4,7 @@ import { Card, Flex, Button, Text } from "@mantine/core";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import AcademicYearTable from "./_components/AcademicYearTable";
 
 async function getAcademicYear(userId: number) {
     return await prisma.academicYear.findMany(
@@ -35,6 +36,7 @@ const AcademicYearPage = async () => {
         redirect('/auth/signin');
     }
     const academicYears = await getAcademicYear(user.id);
+    // console.log(academicYears);
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Flex>
@@ -50,8 +52,7 @@ const AcademicYearPage = async () => {
             <Text mt={16}>
                 Belum ada tahun akademik yang dibuat.
             </Text>
-            // : <TeachingClassTable academicYears={academicYears} />
-            : <></>
+            : <AcademicYearTable academicYears={academicYears} />
         }
         </Card>
     );
