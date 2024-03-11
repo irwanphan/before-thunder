@@ -4,6 +4,7 @@ import { Card, Flex, Button, Text } from "@mantine/core";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import DepartmentTable from "./_components/DepartmentTable";
 
 async function getDepartments(userId: number) {
     return await prisma.department.findMany(
@@ -35,14 +36,15 @@ const DepartmentPage = async () => {
         redirect('/auth/signin');
     }
     const departments = await getDepartments(user.id);
+    console.log(departments);
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Flex>
             <Text size="lg" mr={16}>
-            Daftar Program Studi
+                Daftar Program Studi
             </Text>
             <Link href="/department/create" passHref>
-            <Button>Tambah Baru</Button>
+                <Button>Tambah Baru</Button>
             </Link>
         </Flex>
         {
@@ -50,8 +52,8 @@ const DepartmentPage = async () => {
             <Text mt={16}>
                 Belum ada program studi yang dibuat.
             </Text>
-            // : <TeachingClassTable departments={departments} />
-            : <></>
+            : <DepartmentTable departments={departments} />
+            // : <></>
         }
         </Card>
     );
