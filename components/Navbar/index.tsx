@@ -10,9 +10,7 @@ import { signOut, useSession } from 'next-auth/react';
 
 const Navbar = () => {
   const session = useSession();
-  const theme = useMantineTheme();
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
 
   const links = [
     { link: '/dashboard', label: 'Dashboard' },
@@ -27,6 +25,21 @@ const Navbar = () => {
     },
     { link: `/profile`, label: 'Profil Saya' },
   ];
+
+  const mobileLinks = links.map((link) => {
+    if (link.links) {
+      return link.links.map((item) => (
+        <Link key={item.label} className={classes.link} href={item.link} passHref onClick={() => closeDrawer()}>
+          <Text display='block' my={4}>{item.label}</Text>
+        </Link>
+      ))
+    }
+    return (
+      <Link key={link.label} className={classes.link} href={link.link} passHref onClick={() => closeDrawer()}>
+        <Text display='block' my={4}>{link.label}</Text>
+      </Link>
+    )
+  })
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
@@ -115,7 +128,7 @@ const Navbar = () => {
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md" p='md'>
           <Divider my="sm" />
 
-          {items}
+          {mobileLinks}
 
           <Divider my="sm" />
 
