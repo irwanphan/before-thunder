@@ -37,7 +37,7 @@ const TeachingClassPage = async () => {
   }
 
   const teachingClasses = await getTeachingClasses(user.id);
-  console.log(teachingClasses);
+  // console.log(teachingClasses);
 
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>

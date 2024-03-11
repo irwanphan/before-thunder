@@ -14,36 +14,38 @@ datasource db {
 }
 
 model User {
-  id        Int             @id @default(autoincrement())
-  code      String?         @db.VarChar(255)
-  name      String          @db.VarChar(255)
-  email     String          @unique
-  password  String          @db.VarChar(255)
-  role      String          @default("USER")
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  authored  TeachingClass[] @relation("author")
+  id                   Int             @id @default(autoincrement())
+  code                 String?         @db.VarChar(255)
+  name                 String          @db.VarChar(255)
+  email                String          @unique
+  password             String          @db.VarChar(255)
+  role                 String          @default("USER")
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  authoredClass        TeachingClass[] @relation("authoredClass")
+  authoredDepartment   Department[]    @relation("authoredDepartment")
+  authoredAcademicYear AcademicYear[]  @relation("authoredAcademicYear")
 
   @@map("users")
 }
 
 model TeachingClass {
-  id              Int       @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   authorId        Int
-  author          User?     @relation("author", fields: [authorId], references: [id])
-  prodi           String    @db.VarChar(255)
-  tahunAkademik   String    @db.VarChar(255)
-  semester        String    @db.VarChar(255)
-  kelas           String    @db.VarChar(255)
-  mataKuliah      String    @db.VarChar(255)
+  author          User?        @relation("authoredClass", fields: [authorId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  prodi           String       @db.VarChar(255)
+  tahunAkademik   String       @db.VarChar(255)
+  semester        String       @db.VarChar(255)
+  kelas           String       @db.VarChar(255)
+  mataKuliah      String       @db.VarChar(255)
   jumlahPertemuan Int
-  setiapHari      String    @db.VarChar(255)
-  periode         String    @db.VarChar(255)
+  setiapHari      String       @db.VarChar(255)
+  periode         String       @db.VarChar(255)
   periodeMulai    DateTime
   periodeSelesai  DateTime
   journal         SessionLog[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 
   @@map("teaching_classes")
 }
@@ -51,7 +53,7 @@ model TeachingClass {
 model SessionLog {
   id              Int            @id @default(autoincrement())
   teachingClassId Int
-  teachingClass   TeachingClass? @relation(fields: [teachingClassId], references: [id])
+  teachingClass   TeachingClass? @relation(fields: [teachingClassId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   kelasPengganti  Boolean        @default(false)
   materiAjar      String         @db.Text
   catatan         String         @db.Text
@@ -59,4 +61,29 @@ model SessionLog {
   updatedAt       DateTime       @updatedAt
 
   @@map("session_logs")
+}
+
+model Department {
+  id        Int      @id @default(autoincrement())
+  authorId  Int
+  author    User?    @relation("authoredDepartment", fields: [authorId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  name      String   @db.VarChar(255)
+  headName  String   @db.VarChar(255)
+  logo      String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("departments")
+}
+
+model AcademicYear {
+  id        Int      @id @default(autoincrement())
+  authorId  Int
+  author    User?    @relation("authoredAcademicYear", fields: [authorId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  name      String   @db.VarChar(255)
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("academic_years")
 }
